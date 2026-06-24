@@ -1,0 +1,1 @@
+// giveaway manager file
