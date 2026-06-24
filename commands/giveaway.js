@@ -3,7 +3,6 @@ const {
   PermissionFlagsBits,
   ChannelType
 } = require("discord.js");
-const ms = require("ms");
 
 const {
   createGiveaway,
@@ -18,6 +17,25 @@ const {
   endGiveaway,
   refreshGiveawayMessage
 } = require("../utils/giveawayManager");
+
+function ms(input) {
+  if (!input) return null;
+
+  const match = /^(\d+)(s|m|h|d)$/i.exec(input.trim());
+  if (!match) return null;
+
+  const value = parseInt(match[1], 10);
+  const unit = match[2].toLowerCase();
+
+  const multipliers = {
+    s: 1000,
+    m: 60 * 1000,
+    h: 60 * 60 * 1000,
+    d: 24 * 60 * 60 * 1000
+  };
+
+  return value * multipliers[unit];
+}
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -160,7 +178,7 @@ module.exports = {
       const duration = ms(durationInput);
       if (!duration || duration < 10000) {
         return interaction.reply({
-          content: "❌ Invalid duration. Example: `10m`, `1h`, `2d`",
+          content: "❌ Invalid duration. Example: 10m, 1h, 2d",
           ephemeral: true
         });
       }
@@ -344,11 +362,12 @@ module.exports = {
         const duration = ms(durationInput);
         if (!duration || duration < 10000) {
           return interaction.reply({
-            content: "❌ Invalid duration. Example: `10m`, `1h`, `2d`",
+            content: "❌ Invalid duration. Example: 10m, 1h, 2d",
             ephemeral: true
           });
         }
         updates.endAt = Date.now() + duration;
+        updates.ended = false;
       }
 
       if (!Object.keys(updates).length) {
