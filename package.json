@@ -1,16 +1,14 @@
 {
   "name": "as-gaming-giveaways",
   "version": "1.0.0",
-  "description": "AS GAMING GIVEAWAYS advanced Discord giveaway bot",
+  "description": "AS GAMING GIVEAWAYS discord bot",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "deploy": "node deploy-commands.js"
+    "start": "node index.js"
   },
   "dependencies": {
-    "better-sqlite3": "^11.10.0",
-    "discord.js": "^14.21.0",
-    "dotenv": "^16.4.5",
-    "ms": "^2.1.3"
+    "better-sqlite3": "^11.7.0",
+    "discord.js": "^14.16.3",
+    "dotenv": "^16.4.5"
   }
 }
